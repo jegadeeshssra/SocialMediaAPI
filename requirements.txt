@@ -1,8 +1,8 @@
 fastapi[standard]
+sqlalchemy
 uvicorn
 pydantic
 psycopg2
-time
 pwdlib[argon2]
 pyjwt
-pydantic_Settings
+
