@@ -14,9 +14,9 @@ from ..config import config
 
 # to get a string like this run:
 # openssl rand -hex 32
-SECRET_KEY = "630b3a7b60fd465591a4388e41e9b7e3b5f5021b026e9c029126c1bc4a10d494"
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+SECRET_KEY = config.SECRET_KEY
+ALGORITHM = config.ALGORITHM
+ACCESS_TOKEN_EXPIRE_MINUTES = config.ACCESS_TOKEN_EXPIRE_MINUTES
 
 # Creates a FastAPI security utility that automatically extracts a Bearer token from the 
 # Authorization header and makes it available via Depends(oauth2_scheme), while powering the login form in /docs

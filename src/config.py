@@ -1,16 +1,16 @@
-from pydantic import BaseSettings , SettingsConfigDict
+from pydantic_settings import BaseSettings , SettingsConfigDict
 
 class Settings(BaseSettings):
-    DB: str
-    DB_NAME: str
-    USERNAME: str
-    PASSWORD: str
-    HOST: str
+    DB: str = "postgresql"
+    DB_NAME: str = "postgresql"
+    USERNAME: str = "postgres"
+    PASSWORD: str = "postgres"
+    HOST: str   = "localhost"
     USERS_TABLE_NAME: str
     POSTS_TABLE_NAME: str
     SECRET_KEY: str
-    ALGORITHM: str
-    ACCESS_TOKEN_EXPIRE_MINUTES: int
+    ALGORITHM: str = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
 
     model_config = SettingsConfigDict(
         env_file = ".env",

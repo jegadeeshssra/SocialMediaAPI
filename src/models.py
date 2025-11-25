@@ -2,10 +2,12 @@ from sqlalchemy import Column, Integer, Boolean, String , ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql.expression import null , text
 from sqlalchemy.sql.sqltypes import TIMESTAMP
-from .db import Base
 
-USERS_TABLE_NAME = 'users'
-POSTS_TABLE_NAME = "postsByORM"
+from .db import Base
+from .config import config
+
+USERS_TABLE_NAME = config.USERS_TABLE_NAME
+POSTS_TABLE_NAME = config.POSTS_TABLE_NAME
 
 # Just Initial Creation and NO column modification
 class Post(Base):
