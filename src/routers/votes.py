@@ -25,7 +25,7 @@ async def get_posts(payload: schemas.Vote ,db: Session = Depends(get_db), curren
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"posts with id - {payload.post_id} is not found"
         )
-    vote_chk_query = db.query(models.Votes).filter(models.Votes.post_id == payload.post_id and models.Votes.user_id == current_user.id)
+    vote_chk_query = db.query(models.Votes).filter(models.Votes.post_id == payload.post_id , models.Votes.user_id == current_user.id)
     vote_chk = vote_chk_query.first()
     if payload.vote_direction == 1:
         if vote_chk:

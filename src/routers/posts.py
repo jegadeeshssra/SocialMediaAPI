@@ -17,20 +17,15 @@ router = APIRouter(
 # current_user : bool = Depends(oauth2.get_current_user)
 # - This would verify the auth jwt token wihtin request's "Authorization" header
 
-@router.get("/",response_model= List[schemas.ResponsePost])
+@router.get("/",response_model=List[schemas.ResponsePostAllData])
 async def get_posts(db: Session = Depends(get_db), current_user: models.User = Depends(oauth2.get_current_user),
                     limit: int = 10, skip: int = 0, search: str = ""):
-    all_posts = db.query(
-        models.Post,func.count(models.Votes.post_id).label("votes")
-        ).join(
-            models.Votes,models.Votes.post_id == models.Post.id, isouter= True
-            ).group_by(
-                models.Post.id
-                ).filter(
-                    models.Post.content.contains(search)
+    all_posts = db.query(models.Post,func.count(models.Votes.post_id).label("votes")
+        ).join(models.Votes,models.Votes.post_id == models.Post.id, isouter= True
+            ).group_by( models.Post.id
+                ).filter(models.Post.content.contains(search)
                     ).limit(limit).offset(skip).all()
-    print(type(all_posts)) # query object
-    print(str(all_posts)) # SQL statement
+    print(all_posts)
     if all_posts == None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,

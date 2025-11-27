@@ -2,3 +2,5 @@ __pycache__
 .venv/
 .env
 commands.md
+alembic/
+alembic.ini

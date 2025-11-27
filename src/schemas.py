@@ -70,6 +70,12 @@ class ResponsePost(BaseModel):
     owner: UserOut
     model_config = ConfigDict(from_attributes=True)
 
+class ResponsePostAllData(BaseModel):
+    Post: ResponsePost
+    votes: int
+
+    model_config = ConfigDict(from_attributes=True)
+
 class Vote(BaseModel):
     post_id: int
     vote_direction: Literal[0, 1]
