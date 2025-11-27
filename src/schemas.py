@@ -1,4 +1,5 @@
 from pydantic import BaseModel , EmailStr , ConfigDict
+from typing import Literal
 from datetime import datetime
 
 # Register User
@@ -66,6 +67,9 @@ class ResponsePost(BaseModel):
     # model_config = {                       # NEW WAY 
     #     "from_attributes" : True           # Pydantic model understands the ORM models to deserialize it into json
     # }
-    user: UserOut
+    owner: UserOut
     model_config = ConfigDict(from_attributes=True)
 
+class Vote(BaseModel):
+    post_id: int
+    vote_direction: Literal[0, 1]

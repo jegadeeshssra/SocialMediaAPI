@@ -1,13 +1,15 @@
-from pydantic_settings import BaseSettings , SettingsConfigDict
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
 
 class Settings(BaseSettings):
     DB: str = "postgresql"
     DB_NAME: str = "postgresql"
-    USERNAME: str = "postgres"
+    USER_NAME: str = "postgres"
     PASSWORD: str = "postgres"
     HOST: str   = "localhost"
     USERS_TABLE_NAME: str
     POSTS_TABLE_NAME: str
+    VOTES_TABLE_NAME: str
     SECRET_KEY: str
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
@@ -17,4 +19,7 @@ class Settings(BaseSettings):
         extra = "ignore"
     )
 
-config = Settings()
+settings = Settings()
+
+
+# NOTE: Dont use "USERNAME"as an variable bcuz it fetches hte username from the computer

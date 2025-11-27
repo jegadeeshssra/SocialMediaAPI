@@ -8,15 +8,17 @@ from fastapi import Depends, FastAPI, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jwt.exceptions import InvalidTokenError
 
-from ..db import get_db
-from .. import models , schemas
-from ..config import config
+from ..models import models
+
+from ..database.db import get_db
+from .. import schemas
+from ..config.config import settings
 
 # to get a string like this run:
 # openssl rand -hex 32
-SECRET_KEY = config.SECRET_KEY
-ALGORITHM = config.ALGORITHM
-ACCESS_TOKEN_EXPIRE_MINUTES = config.ACCESS_TOKEN_EXPIRE_MINUTES
+SECRET_KEY = settings.SECRET_KEY
+ALGORITHM = settings.ALGORITHM
+ACCESS_TOKEN_EXPIRE_MINUTES = settings.ACCESS_TOKEN_EXPIRE_MINUTES
 
 # Creates a FastAPI security utility that automatically extracts a Bearer token from the 
 # Authorization header and makes it available via Depends(oauth2_scheme), while powering the login form in /docs

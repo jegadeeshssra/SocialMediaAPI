@@ -4,8 +4,10 @@ import jwt
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jwt.exceptions import InvalidTokenError
 
-from .. import models , schemas
-from ..db import get_db
+from ..models import models
+
+from .. import schemas
+from ..database.db import get_db
 from ..utils import hashing , oauth2
 
 router = APIRouter(

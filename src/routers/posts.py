@@ -1,9 +1,12 @@
 from fastapi import Response , status , HTTPException , Depends , APIRouter
 from typing import List
 from sqlalchemy.orm import Session
+from sqlalchemy import func
 
-from .. import models , schemas
-from ..db import get_db
+from ..models import models
+
+from .. import schemas
+from ..database.db import get_db
 from ..utils import oauth2
 
 router = APIRouter(
@@ -16,8 +19,16 @@ router = APIRouter(
 
 @router.get("/",response_model= List[schemas.ResponsePost])
 async def get_posts(db: Session = Depends(get_db), current_user: models.User = Depends(oauth2.get_current_user),
-                    limit: int = 0, skip: int = 0, search: str = ""):
-    all_posts = db.query(models.Post).filter(models.Post.content.contains(search)).limit(limit).offset(skip).all()
+                    limit: int = 10, skip: int = 0, search: str = ""):
+    all_posts = db.query(
+        models.Post,func.count(models.Votes.post_id).label("votes")
+        ).join(
+            models.Votes,models.Votes.post_id == models.Post.id, isouter= True
+            ).group_by(
+                models.Post.id
+                ).filter(
+                    models.Post.content.contains(search)
+                    ).limit(limit).offset(skip).all()
     print(type(all_posts)) # query object
     print(str(all_posts)) # SQL statement
     if all_posts == None:
