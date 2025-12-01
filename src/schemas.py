@@ -71,7 +71,7 @@ class ResponsePost(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
 class ResponsePostAllData(BaseModel):
-    Post: ResponsePost
+    Post: ResponsePost   # Key should be in "Post"   not "post"
     votes: int
 
     model_config = ConfigDict(from_attributes=True)

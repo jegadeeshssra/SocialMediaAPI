@@ -7,10 +7,10 @@ class Settings(BaseSettings):
     USER_NAME: str = "postgres"
     PASSWORD: str = "postgres"
     HOST: str   = "localhost"
-    USERS_TABLE_NAME: str
-    POSTS_TABLE_NAME: str
-    VOTES_TABLE_NAME: str
-    SECRET_KEY: str
+    USERS_TABLE_NAME: str = "users"
+    POSTS_TABLE_NAME: str = "posts"
+    VOTES_TABLE_NAME: str = "votes"
+    SECRET_KEY: str = "secret_key"
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
 
