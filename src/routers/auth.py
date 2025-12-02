@@ -30,6 +30,11 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 async def create_users(payload: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     # Retrieve the User's data with received email
     user_data = db.query(models.User).filter(models.User.email == payload.username).first()
+    if user_data == None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"user not found."
+        )
     # Verify the hash
     if hashing.verify_password(payload.password,user_data.password) == False:
         raise HTTPException(
