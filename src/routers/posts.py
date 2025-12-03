@@ -34,11 +34,11 @@ async def get_posts(db: Session = Depends(get_db), current_user: models.User = D
     return all_posts
 
 # Order of the api endpoint definition matters - /posts/{id} should not be before /posts/latest bcuz the /latest will be taken as id path parameter
-@router.post("/")
-async def latest_posts():
-    return {
-        "message":"SocialMediaAPI"
-    }
+# @router.post("/")
+# async def latest_posts():
+#     return {
+#         "message":"SocialMediaAPI"
+#     }
 
 @router.get("/{id}", response_model = schemas.ResponsePost)
 async def get_posts_by_id(id: int, db: Session = Depends(get_db), current_user: models.User = Depends(oauth2.get_current_user)):

@@ -14,8 +14,9 @@ class Settings(BaseSettings):
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
 
+
     model_config = SettingsConfigDict(
-        env_file = ".env",
+        env_file = ".env",      # This detects the .env wihtin the src folder only(Not for production)
         extra = "ignore"
     )
 

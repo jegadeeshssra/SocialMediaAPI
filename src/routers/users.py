@@ -14,6 +14,13 @@ router = APIRouter(
 
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model = schemas.CreateUserResponse)
 async def create_users(payload: schemas.CreateUser, db: Session = Depends(get_db)):
+    user_check_query = db.query(models.User).filter(models.User.email == payload.email)
+    user_data  = user_check_query.first()
+    if user_data != None:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail=f"This email id - {payload.email} already exists"
+        )
     hashed_pwd = hashing.hash_password(payload.password)
     payload.password = hashed_pwd
     new_user = models.User(**payload.model_dump()) # unpack the dict
