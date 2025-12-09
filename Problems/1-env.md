@@ -1,0 +1,2 @@
+- for "fastapi dev", .env should be within the src/ dir , side by side to main.py
+- for "uvicorn src.main:app --host "localhost" --port "8000", .env should be within the app/ dir

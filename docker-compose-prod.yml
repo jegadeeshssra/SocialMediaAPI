@@ -1,0 +1,50 @@
+version: '3.8'
+services:
+  database:
+    image: postgres:16  # Custom-image with the modified config file
+    environment:
+      - POSTGRES_USER={DB_USER}
+      - POSTGRES_PASSWORD={DB_PASSWORD}
+      - POSTGRES_DB={DB_NAME}
+    ports:
+      - "5432:5432"  # Expose externally if you need to connect from host machine
+    volumes:
+      # - .\docker-db-files\postgres_data:/var/lib/postgresql/data  # Persist data 
+        # this will run the container with the already modified configuration within the mounted path
+      # - .\docker-db-files\postgres_config:/usr/share/
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d socialmediaAPI"]
+      interval: 3s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+      start_interval: 1s
+
+  backend:
+    image: socialmedia-api-image:v1   # should mention the image of the api
+    #build: .  # Or image: your-backend-image
+    ports:
+      - "8001:8001"  # Expose your backend port if needed
+    environment:
+      - HOST=database     # refers the database service name below
+      - DB_NAME={DB_NAME}
+      - USER_NAME={DB_USER}
+      - PASSWORD={DB_PASSWORD}
+      - USERS_TABLE_NAME={USERS_TABLE_NAME}
+      - POSTS_TABLE_NAME={POSTS_TABLE_NAME}
+      - VOTES_TABLE_NAME={VOTES_TABLE_NAME}
+      - SECRET_KEY={SECRET_KEY}
+      - ALGORITHM={ALGORITHM}
+      - ACCESS_TOKEN_EXPIRE_MINUTES={ACCESS_TOKEN_EXPIRE_MINUTES}
+    # volumes:
+    #   - ./:/usr/src/app #:ro - read only for the container process
+    #                     # - This will sync the code changes from local to the container
+    depends_on:
+      database: 
+        condition: "service_healthy"
+    # Optional: Add a wait script (see Step 3) in command if needed
+    command: ["uvicorn","src.main:app","--host","0.0.0.0","--port","8001","--reload"] # this command overides the cmd within the Dockerfile
+
+
+# volumes:
+#   postgres_data: .\postgres_data

@@ -1,9 +1,11 @@
 __pycache__
 .venv/
 .env
+src/.env
 commands.md
 vm-commands.md
-socialmediaAPI.pem
 Infra-Setup/myCA.crt
 Infra-Setup/myCA.pem
-Infra-Setup/vm-commands.md
+Infra-Setup/docker-setup.md
+docker-db-files/
+docker-compose.yml
