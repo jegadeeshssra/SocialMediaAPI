@@ -9,3 +9,4 @@ Infra-Setup/myCA.pem
 Infra-Setup/docker-setup.md
 docker-db-files/
 docker-compose.yml
+frontend/

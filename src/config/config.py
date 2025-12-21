@@ -15,8 +15,8 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
 
     model_config = SettingsConfigDict(
-        #env_file = ".env",      # This detects the .env wihtin the src folder only(Not for production)
-        env_file = None,     # Disable .env loading; use system env vars only (ideal for production)
+        env_file = ".env",      # This detects the .env wihtin the src folder only(Not for production)
+        #env_file = None,     # Disable .env loading; use system env vars only (ideal for production)
         extra = "ignore"
     )
 

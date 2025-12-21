@@ -12,6 +12,7 @@ router = APIRouter(
     tags=['Users']
 ) 
 
+# As the prefix is /users, the path will be /users/ , so when the request is sent to /users it will respond with 307 Temporary Redirect and then goes to the path /users/
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model = schemas.CreateUserResponse)
 async def create_users(payload: schemas.CreateUser, db: Session = Depends(get_db)):
     user_check_query = db.query(models.User).filter(models.User.email == payload.email)
