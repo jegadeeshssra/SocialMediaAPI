@@ -12,14 +12,14 @@ def test_root(client):
 # As the prefix is /users, the path will be /users/ , so when the request is sent to /users it will respond 
 # with 307 Temporary Redirect and then goes to the path /users/
 def test_create_user(client):
-    response = client.post("/users", json={"email": "jegadees@gmail.com", "password": "password"})
+    response = client.post("/users/", json={"email": "j@gmail.com", "password": "password"})
     print(response.json())
     user_response = UserOut(**response.json())
     # assert user_response.email == "jegadees@gmail.com"
     assert response.status_code == 201
 
 def test_login_user(client):
-    response = client.post("/login", 
-        data={"username": "jegadees@gmail.com", "password": "password"}   # use "data" instead of "json" for form data
+    response = client.post("/auth/login/", 
+        data={"username": "j@gmail.com", "password": "password"}   # use "data" instead of "json" for form data
     )  
-    assert response.status_code == 201
+    assert response.status_code == 200
